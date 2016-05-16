@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo</title>
+<script type="text/javascript" src="js/jquery-1.12.0.min.js?v=1.0.0.2"></script>
+<script type="text/javascript" src="js/jquery.linq.js?v=1.0.0.2"></script>
+<style>
+body{background-color: #fff;margin:0px; padding: 0px;}
+#loading{display: block;}
+</style>
+</head>
+<body>
+   <div id="divdata"></div>
+   <div id="stuPerpend">this is test !</div>
+   <button id="addData">添加数据</button> 
+   <button id="showData">显示数据</button> 
+   <button id="btnPrd">前置添加</button> 
+   </br>
+   <input /> 
+   <hr/>
+  
+   <table id="linqtable" border="1px" cellspacing="0px">
+       
+   </table>
+   <script type="text/javascript">
+          $(function(){
+              var defdata = {show:"<b>this is very interesting! </b>"};
+              
+              // data操作
+              $('#showData').attr('disabled','disabled');
+              $("#addData").click(function(){
+                  $('#divdata').data('setData','Hello World');
+                  $('#showData').attr('disabled',false);
+              });
+              
+              $("#showData").click(function(){
+                  alert($('#divdata').data('setData'));
+                  $('#divdata').html('<h1>'+$('#divdata').data('setData')+'<h1></br>');
+              });
+              // on方法使用
+              $('input').on("click",defdata,function(e){
+                $('input').attr("value",$('#divdata').data('setData'));
+                alert(e.data.show);
+              });
+              // prepend方法使用  ---前置添加
+              $('#btnPrd').on('click',defdata,function(e){
+                  console.log(e.data.show);
+                  $('#stuPerpend').prepend(e.data.show);
+              });
+             
+             // linq 的使用
+              $('#btnlinq').click(TestQueryObjects());
+             
+             function TestQueryObjects() {
+                var jsonArray = [
+                    { "StuID": 1, "StuName": "James", "Age": 30, "Country": "USA" },
+                    { "StuID": 2, "StuName": "Byant", "Age": 32, "Country": "USA" },
+                    { "StuID": 3, "StuName": "liu", "Age": 50, "Country": "Taiwan" },
+                    { "StuID": 4, "StuName": "bao", "Age": 52, "Country": "USA" },
+                    { "StuID": 5, "StuName": "hua", "Age": 53, "Country": "Taiwan" },
+                    { "StuID": 6, "StuName": "Byant", "Age": 36, "Country": "USA" },
+                    { "StuID": 7, "StuName": "Lin", "Age": 30, "Country": "Taiwan" },
+                    { "StuID": 8, "StuName": "Yao", "Age": 30, "Country": "Shanghai" }
+                ];
+                console.log(jsonArray);
+                var tr = '<tr><td>ID</td><td>姓名</td><td>年龄</td><td>国家</td><tr>'
+                var querResult = $.Enumerable.From(jsonArray)
+                    .Where(function (x) { return x.Age <= 30; })
+                    .OrderBy(function (x) { return x.StuID; })
+                    .ToArray()
+                    .forEach(function (i) {
+                        console.log(i.StuID + ";" + i.StuName + ";" + i.Age + ";" + i.Country + "<br/>");
+                        tr +="<tr><td>"+i.StuID + "</td><td>" + i.StuName + "</td><td>" + i.Age + "</td><td>" + i.Country + "</td><tr>";          
+                    });
+                   $('#linqtable').html(tr); 
+                var tr2 = "";
+                var queryResult2 = $.Enumerable.From(jsonArray)
+                    .Where("$.Age>=50") // 这个操作很方便
+                    .OrderBy("$.StuID")
+                    .ToArray()
+                    .forEach(function (i) {
+                        // alert($);
+                        tr2 +="<tr><td>"+i.StuID + "</td><td>" + i.StuName + "</td><td>" + i.Age + "</td><td>" + i.Country + "</td><tr>";
+                    });
+                $(tr2).appendTo("#linqtable"); 
+                
+                // $.Enumerable.Range(1, 10).Where("$%2==0").ForEach("alert($)");
+                
+                
+                var queryResult3 = $.Enumerable.From(jsonArray)
+                    .Where("$.age==36") // 这个操作很方便
+                    .ToArray();
+                    
+                   console.log("test"+queryResult3); 
+                    // 追加到元素集合中去
+                    $.Enumerable.From(jsonArray)
+                    .Select("$")
+                    .ToArray()
+                    .forEach(function() {
+                        // alert($); // $代表全部数据 
+                    })
+                    // .TojQuery()
+                    // .appendTo("#linqtable");
+             }
+             
+          });
+    </script>
+</body>
+</html>

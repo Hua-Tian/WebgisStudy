@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAMS</title>
+<link type="text/css" rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="css/store.css?v=1.0.0.2">
+<link rel="stylesheet" type="text/css" href="css/loadingStyle.css?v=1.0.0.2">
+<script type="text/javascript" src="js/jquery-1.12.0.min.js?v=1.0.0.2"></script>
+<style>
+body{background-color: #fff;margin:0px; padding: 0px;}
+#loading{display: block;}
+</style>
+</head>
+<body>
+	  <div id="loading">
+    <div id="loadingID">
+      <div id="fountainTextG">
+        <div id="fountainTextG_1" class="fountainTextG">L</div>
+        <div id="fountainTextG_2" class="fountainTextG">o</div>
+        <div id="fountainTextG_3" class="fountainTextG">a</div>
+        <div id="fountainTextG_4" class="fountainTextG">d</div>
+        <div id="fountainTextG_5" class="fountainTextG">i</div>
+        <div id="fountainTextG_6" class="fountainTextG">n</div>
+        <div id="fountainTextG_7" class="fountainTextG">g</div>
+        <div id="fountainTextG_8" class="fountainTextG">.</div>
+        <div id="fountainTextG_9" class="fountainTextG">.</div>
+        <div id="fountainTextG_10" class="fountainTextG">.</div>
+      </div>
+    </div>
+   </div>
+   <script type="text/javascript">
+        var windowWidth = $(window).width();
+        var windowHeight = $(window).height();
+        var headHeight = $("#top").height();
+        var height = windowHeight-headHeight-6;
+
+        var loadingWidth = $("#loading").width();
+        var loadingHeight = $("#loading").height();
+        var loadingTop = (windowHeight-loadingHeight)/2;
+        var loadingLeft = (windowWidth-loadingWidth)/2;
+        $("#loading").css("top",loadingTop);
+        $("#loading").css("left",loadingLeft);
+    </script>
+</body>
+</html>
