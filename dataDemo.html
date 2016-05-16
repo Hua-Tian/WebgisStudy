@@ -99,8 +99,8 @@ body{background-color: #fff;margin:0px; padding: 0px;}
                     $.Enumerable.From(jsonArray)
                     .Select("$")
                     .ToArray()
-                    .forEach(function() {
-                        // alert($); // $代表全部数据 
+                    .forEach(function(e) {
+                        alert(e.StuName); // $代表全部数据 
                     })
                     // .TojQuery()
                     // .appendTo("#linqtable");
