@@ -21,10 +21,13 @@ body{background-color: #fff;margin:0px; padding: 0px;}
    </br>
    <input /> 
    <hr/>
-  
-   <table id="linqtable" border="1px" cellspacing="0px">
-       
-   </table>
+    <table id="linqtable" border="1px" cellspacing="0px">
+    </table>
+    <select id="linqsel">
+        <option value="3">3this is three</option>
+        <option value="1" selected="selected">1this is one</option>
+        <option value="2">2this is two</option>
+    </select>
    <script type="text/javascript">
           $(function(){
               var defdata = {show:"<b>this is very interesting! </b>"};
@@ -89,21 +92,28 @@ body{background-color: #fff;margin:0px; padding: 0px;}
                 
                 // $.Enumerable.Range(1, 10).Where("$%2==0").ForEach("alert($)");
                 
-                
                 var queryResult3 = $.Enumerable.From(jsonArray)
-                    .Where("$.age==36") // 这个操作很方便
+                    .Where("$.age==36") 
                     .ToArray();
                     
-                   console.log("test"+queryResult3); 
-                    // 追加到元素集合中去
                     $.Enumerable.From(jsonArray)
                     .Select("$")
                     .ToArray()
                     .forEach(function(e) {
-                        alert(e.StuName); // $代表全部数据 
+                        // alert(e.StuName); // $代表全部数据 
                     })
-                    // .TojQuery()
-                    // .appendTo("#linqtable");
+                    
+                    // 对Option中的文本进行排序
+                    var linqselect = $.Enumerable.From($("#linqsel option")).OrderBy("$.innerText").ToArray();
+                    $("#linqsel").empty();
+                    $.Enumerable.From(linqselect).Select("$").TojQuery().appendTo("#linqsel");
+                    
+                    //
+                    $.Enumerable.Range(1, 10)
+                     .Select(function (i) { return $("<option>").text(i)[0] })
+                     .TojQuery()
+                     .appendTo("#linqsel");
+
              }
              
           });
